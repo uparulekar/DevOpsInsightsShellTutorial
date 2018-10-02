@@ -11,13 +11,13 @@ export LOGICAL_APP_NAME="Weather Application"
 export BUILD_PREFIX=master
 
 # The id of the toolchain that shows up on the brower URL
-export TOOLCHAIN_ID="dca6e715-29ed-4400-b55d-f48acb404540"
+export TOOLCHAIN_ID="<Enter toolchain id here>"
 
 # A unique number identifying the build
 export BUILD_NUMBER=1
 
 # API Key of the user
-export IBM_CLOUD_API_KEY="3uUSlrZwWKOnZLxeDPhhPk_05jsARuCOooNwyvwfCuwJ"
+export IBM_CLOUD_API_KEY="<API key here>"
 
 # Set the value to true to see detail CLI logs
 #export IDRA_DEBUG=false
