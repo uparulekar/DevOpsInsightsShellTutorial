@@ -1,0 +1,74 @@
+#!groovy
+
+pipeline {
+    agent any
+    environment {
+        // You need to specify 3 required environment variables first
+        IBM_CLOUD_DEVOPS_API_KEY = credentials('IBM_CLOUD_DEVOPS_API_KEY')
+        IBM_CLOUD_DEVOPS_APP_NAME = 'Weather-App-Declarative'
+        IBM_CLOUD_DEVOPS_TOOLCHAIN_ID = <Enter toolchain Id here>
+    }
+    stages {
+
+        stage('Build') {
+            environment {
+                // set environment for Build
+            }
+            steps {
+                // run your build scripts
+                sh '''                              
+                    echo "Build...."                              
+                '''
+            }
+            // post build section to use "publishBuildRecord" method to publish build record
+            post {
+                success {
+                    publishBuildRecord gitBranch: "mbranch", gitCommit: "123234345", gitRepo: "https://test-iam-1", result:"SUCCESS"
+                }
+                failure {
+                    publishBuildRecord gitBranch: "mbranch", gitCommit: "123234345", gitRepo: "https://test-iam-1", result:"FAIL"
+                }
+            }
+        }
+
+        stage('Upload Unit Test and Code Coverage') {
+            steps {
+                sh '''                              
+                    echo "Upload test results...."                              
+                '''
+            }
+            // post build section to use "publishTestResult" method to publish test result
+            post {
+                always {
+                    publishTestResult type:'unittest', fileLocation: './mocha_pass.json'
+                    publishTestResult type:'code', fileLocation: './istanbul_pass.json'
+                }
+            }
+        }
+
+        stage('Gate') {
+            steps {
+                // use "evaluateGate" method to leverage IBM Cloud DevOps gate
+                evaluateGate policy: 'FirstPolicy', forceDecision: 'true'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Push the Weather App to Bluemix, staging space
+                sh '''                              
+                    echo "Deploying...."                              
+                '''
+            }
+            // post build section to use "publishDeployRecord" method to publish deploy record and notify OTC of stage status
+            post {
+                success {
+                    publishDeployRecord environment: "dev", result:"SUCCESS", appUrl: "https://test-iam-app-1"
+                }
+                failure {
+                    publishDeployRecord environment: "dev", result:"FAIL", appUrl: "https://test-iam-app-1"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+#!groovy
+node {
+
+    withEnv([
+            // You need to specify 2 required environment variables and your bluemix credentials first
+            'IBM_CLOUD_DEVOPS_APP_NAME=Weather-App-Scripted',
+            'IBM_CLOUD_DEVOPS_TOOLCHAIN_ID=<Enter toolchain Id here>'
+            IBM_CLOUD_DEVOPS_API_KEY=
+    ]) {
+        withCredentials([string(credentialsId: 'YOUR_API_KEY_ID', variable: 'IBM_CLOUD_DEVOPS_API_KEY')]) {
+
+            stage('Build') {
+                try {
+                    sh '''                              
+                        echo "Build...."                              
+                    '''
+                    // use "publishBuildRecord" method to publish build record
+                    publishBuildRecord gitBranch: "mbranch", gitCommit: "123234345", gitRepo: "https://test-iam-1", result:"SUCCESS"
+                }
+                catch (Exception e) {
+                    publishBuildRecord gitBranch: "mbranch", gitCommit: "123234345", gitRepo: "https://test-iam-1", result:"FAIL"
+                }
+            }
+
+            stage('Upload Unit Test and Code Coverage') {
+                sh '''                              
+                        echo "Upload test results...."                              
+                '''
+                // use "publishTestResult" method to publish test result
+                publishTestResult type:'unittest', fileLocation: './mocha_pass.json'
+                publishTestResult type:'code', fileLocation: './istanbul_pass.json'
+            }
+
+            stage('Gate') {
+                // use "evaluateGate" method to leverage IBM Cloud DevOps gate
+                evaluateGate policy: 'FirstPolicy', forceDecision: 'true'
+            }
+
+            stage('Deploy') {
+                try {
+                    sh '''                              
+                        echo "Deploying...."                              
+                    '''
+                    // use "publishDeployRecord" method to publish test result
+                    publishDeployRecord environment: "dev", appUrl: "https://test-iam-app-1", result:"SUCCESS"                       
+                }
+                catch (Exception e) {
+                    publishDeployRecord environment: "dev", appUrl: "https://test-iam-app-1", result:"FAIL"                        
+                }
+            }
+        }
+    }
+}
