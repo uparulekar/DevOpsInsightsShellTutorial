@@ -1,10 +1,11 @@
 #!groovy
 node {
+    git url: 'https://github.com/uparulekar/DevOpsInsightsShellTutorial.git'
 
     withEnv([
             // You need to specify 2 required environment variables and your bluemix credentials first
             'IBM_CLOUD_DEVOPS_APP_NAME=Weather-App-Scripted',
-            'IBM_CLOUD_DEVOPS_TOOLCHAIN_ID=env.TOOLCHAIN_ID'
+            'IBM_CLOUD_DEVOPS_TOOLCHAIN_ID=' + env.TOOLCHAIN_ID
     ]) {
         withCredentials([string(credentialsId: 'YOUR_API_KEY_ID', variable: 'IBM_CLOUD_DEVOPS_API_KEY')]) {
 
