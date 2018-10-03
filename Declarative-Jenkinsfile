@@ -4,9 +4,9 @@ pipeline {
     agent any
     environment {
         // You need to specify 3 required environment variables first
-        IBM_CLOUD_DEVOPS_API_KEY = credentials('IBM_CLOUD_DEVOPS_API_KEY')
+        IBM_CLOUD_DEVOPS_API_KEY = credentials('YOUR_API_KEY_ID')
         IBM_CLOUD_DEVOPS_APP_NAME = 'Weather-App-Declarative'
-        IBM_CLOUD_DEVOPS_TOOLCHAIN_ID = <Enter toolchain Id here>
+        IBM_CLOUD_DEVOPS_TOOLCHAIN_ID = env.TOOLCHAIN_ID
     }
     stages {
 
