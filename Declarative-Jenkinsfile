@@ -6,14 +6,10 @@ pipeline {
         // You need to specify 3 required environment variables first
         IBM_CLOUD_DEVOPS_API_KEY = credentials('YOUR_API_KEY_ID')
         IBM_CLOUD_DEVOPS_APP_NAME = 'Weather-App-Declarative'
-        IBM_CLOUD_DEVOPS_TOOLCHAIN_ID = env.TOOLCHAIN_ID
     }
     stages {
 
         stage('Build') {
-            environment {
-                // set environment for Build
-            }
             steps {
                 // run your build scripts
                 sh '''                              
