@@ -5,7 +5,7 @@ node {
     withEnv([
             // Three environment variables are needed for DevOps Insights
             // IBM_CLOUD_DEVOPS_APP_NAME -> This is the name of the application that shows up in the dashboard
-            // IBM_CLOUD_DEVOPS_TOOLCHAIN_ID -> This is your toolchain id, in this example the value for it is set in the Jenkins configuration page
+            // IBM_CLOUD_DEVOPS_TOOLCHAIN_ID -> This is your toolchain id, for this tutorial the value for it is set in the Jenkins configuration page
             // IBM_CLOUD_DEVOPS_API_KEY -> This is the api key for your account that also has access to the toolchain, the value for this is specified in Jenkins credentials.
 
             'IBM_CLOUD_DEVOPS_APP_NAME=Weather-App-Scripted',
