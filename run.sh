@@ -4,20 +4,20 @@
 # Environment variables
 #
 
+# The id of the toolchain that shows up on the brower URL
+export TOOLCHAIN_ID="<Enter toolchain id here>"
+
+# API Key of the user
+export IBM_CLOUD_API_KEY="<API key here>"
+
 # This is the name of the application that shows up on the Dashboard
 export LOGICAL_APP_NAME="Weather Application"
 
 # This value is prefixed to the build number
 export BUILD_PREFIX=master
 
-# The id of the toolchain that shows up on the brower URL
-export TOOLCHAIN_ID="<Enter toolchain id here>"
-
 # A unique number identifying the build
 export BUILD_NUMBER=1
-
-# API Key of the user
-export IBM_CLOUD_API_KEY="<API key here>"
 
 # Set the value to true to see detail CLI logs
 #export IDRA_DEBUG=false
